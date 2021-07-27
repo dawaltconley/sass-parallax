@@ -1,65 +1,14 @@
 // styling for container elements of parallax pages
-@use "sass:math";
 @use "mixins" as parallax;
 
-$p: parallax.$perspective;
-@if math.is-unitless($p) {
-    $p: $p * 1px;
-}
-
 .parallax-body {
-    @include parallax.support {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-    }
-
-    &::before { // fixes rendering issues on Edge
-        content: "";
-        position: fixed;
-        top: 0;
-        width: 1px;
-        height: 1px;
-        z-index: 1;
-    }
+    @include parallax.body();
 }
 
 .parallax-page {
-    position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    @include parallax.support {
-        height: 100vh;
-        -webkit-perspective: $p;
-        perspective: $p;
-        -webkit-perspective-origin: right;
-        perspective-origin: right;
-
-        > * { // originally outside parallax.support, test if needed
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-        }
-    }
+    @include parallax.page();
 }
 
 .parallax-group {
-    position: relative;
-    pointer-events: none;
-    background-color: transparent !important;
-
-    & > * {
-        position: relative; // fixes a stacking issue in IE. must be overridden by mixin.
-        pointer-events: auto;
-    }
-
-    @include parallax.support {
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-
-        $offset: 100; // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
-        margin-left: calc(#{$offset}% - #{$offset}vw);
-        margin-right: calc(#{$offset}% - #{$offset}vw);
-        padding-left: calc(#{$offset}vw - #{$offset}%);
-        padding-right: calc(#{$offset}vw - #{$offset}%);
-    }
+    @include parallax.group();
 }

@@ -13,10 +13,76 @@ $perspective: 2000px !default;
     }
 }
 
+// settings for the document body of a parallax page
+// applies hw acceleration
+
+@mixin body {
+    @include support {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    &::before { // fixes rendering issues on Edge
+        content: "";
+        position: fixed;
+        top: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 1;
+    }
+}
+
+// settings for the scrollable element of the parallax page
+// can be document body, but putting the two together
+// caused issues in some browsers
+
+@mixin page {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @include support {
+        height: 100vh;
+        -webkit-perspective: $perspective;
+        perspective: $perspective;
+        -webkit-perspective-origin: right;
+        perspective-origin: right;
+
+        > * { // originally outside parallax.support, test if needed
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+    }
+}
+
+// settings for a group of parallax elements positione in 3d space
+// within the scrollable page.
+
+@mixin group {
+    position: relative;
+    pointer-events: none;
+    background-color: transparent !important;
+
+    & > * {
+        position: relative; // fixes a stacking issue in IE. must be overridden by mixin.
+        pointer-events: auto;
+    }
+
+    @include support {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        $offset: 100; // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
+        margin-left: calc(#{$offset}% - #{$offset}vw);
+        margin-right: calc(#{$offset}% - #{$offset}vw);
+        padding-left: calc(#{$offset}vw - #{$offset}%);
+        padding-right: calc(#{$offset}vw - #{$offset}%);
+    }
+}
+
 // settings for a layer of a parallax-group div
-// first line calculates scale to preserve original size
-// when translated backwards
-// second line calculates minimum height adjusment necessary
+// $scale calculates scale to preserve original size when translated backwards
+// $height-adjust calculates minimum height adjusment necessary
 // for the layer to always fill the width of its parent parallax-group
 
 @mixin bg($depth: 0px, $perspective: $perspective) {
