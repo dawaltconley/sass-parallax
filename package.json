@@ -4,6 +4,8 @@
   "description": "Mixin and styles for pure CSS parallax.",
   "main": "_index.scss",
   "scripts": {
+    "build": "npx gulp build ; npx @11ty/eleventy",
+    "serve": "npx gulp serve & npx @11ty/eleventy --serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +31,7 @@
     "eslint": "^7.31.0",
     "gulp": "^4.0.2",
     "gulp-sass": "^5.0.0",
+    "normalize.css": "^8.0.1",
     "sass": "^1.36.0"
   }
 }

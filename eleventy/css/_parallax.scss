@@ -1,0 +1,13 @@
+@use 'index' as parallax with ($perspective: 100px);
+
+.parallax-bg-deep {
+    @include parallax.bg(-200);
+}
+
+.parallax-bg-middle {
+    @include parallax.bg(-100);
+}
+
+.parallax-bg-shallow {
+    @include parallax.bg(-50);
+}

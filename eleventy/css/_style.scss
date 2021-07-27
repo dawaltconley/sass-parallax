@@ -1,0 +1,211 @@
+// Colors
+$text-color: #222222;
+$bg-color: #EEEEEE;
+$link-color: #ffaaaa;
+
+// Images
+$sand: url(/images/sand.jpeg);
+$pavement: url(/images/pavement.jpeg);
+$clouds: url(/images/clouds.jpeg);
+
+/*
+ * Style
+ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-size: 4vmin;
+    font-weight: 400;
+    line-height: 1.2;
+    background-color: red;
+    text-align: center;
+}
+
+h1, h2 {
+    font-weight: 600;
+}
+
+strong {
+    font-weight: 500;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    &:visited {
+        color: lighten($link-color, 6%)
+    }
+}
+
+%flex-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    @extend %flex-center;
+    position: relative;
+    padding: 60px;
+    p {
+        max-width: 36em;
+    }
+}
+
+.base-layer {
+    position: relative;
+    color: $text-color;
+    background-color: $bg-color;
+    z-index: 1;
+}
+
+.parallax-group {
+    color: $bg-color;
+    text-shadow: 1px 1px 4px $text-color;
+}
+
+footer {
+    color: $bg-color;
+    background-color: $text-color;
+    padding: 15px;
+    line-height: 1.4;
+    font-size: 16px;
+    p {
+        margin: 0;
+    }
+}
+
+.footer-table {
+    @media (min-width: 800px) {
+        display: table;
+        margin: 0 auto;
+        border-collapse: collapse;
+        table-layout: fixed;
+        line-height: 30px;
+
+        p {
+            display: table-cell;
+            padding: 0 1em;
+            width: 50%;
+
+            &:first-child {
+                text-align: right;
+                border-right: 1px solid mix($text-color, $bg-color, 90%);
+            }
+        }
+    }
+}
+
+.screen-height {
+    min-height: 100vh;
+}
+
+.bg-1, .bg-2, .bg-3 {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.bg-1 {
+    background-image: $sand;
+}
+
+.bg-2 {
+    background-image: $pavement;
+}
+
+.bg-3 {
+    $darken: .55;
+    background-image: linear-gradient(rgba(black, $darken), rgba(black, $darken)), $clouds;
+}
+
+.arrows {
+    $arrow-color: #b3b3b3;
+    $arrow-size: 30px;
+    $parallax-inset: 60px;
+
+    &:before, &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        left: calc(50% - #{$arrow-size});
+        border-top: 0 solid $arrow-color;
+        border-bottom: 0 solid $arrow-color;
+        border-left: $arrow-size solid transparent;
+        border-right: $arrow-size solid transparent;
+    }
+
+    &:before {
+        top: 10px;
+        border-bottom-width: $arrow-size;
+    }
+
+    &:after {
+        bottom: 10px;
+        border-top-width: $arrow-size;
+    }
+
+    @for $i from 1 through 3 {
+        $depth: nth(("shallow", "middle", "deep"), $i);
+        &.parallax-bg-#{$depth} {
+            $color: rgba(darken($arrow-color, $i * 14%), 1);
+            $size: $arrow-size - ($i * 4px);
+            &:before, &:after {
+                left: calc(50% - #{$size});
+                border-top-color: $color;
+                border-bottom-color: $color;
+                border-left-width: $size;
+                border-right-width: $size;
+            }
+            &:before {
+                top: $parallax-inset;
+                border-bottom-width: $size;
+            }
+            &:after {
+                bottom: $parallax-inset;
+                border-top-width: $size;
+            }
+        }
+    }
+}
+
+.hide-arrows .arrows {
+    &:before, &:after {
+        display: none;
+    }
+}
+
+#options {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    font-family: sans-serif;
+    font-size: 1.2rem;
+    z-index: 100;
+    text-align: left;
+    line-height: 1.5;
+    color: $text-color;
+    background-color: rgba($bg-color, 0.8);
+    padding: 8px;
+    border-radius: 5px;
+
+    input {
+        vertical-align: middle;
+        position: relative;
+        bottom: .15em;
+        margin-right: .3em;
+    }
+}
