@@ -21,11 +21,6 @@ body.parallax-body {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-    @if $native-scroll { scroll-behavior: smooth; }
-
-    > * {
-        @extend .hw-accel;
-    }
 
     @include parallax.support {
         height: 100vh;
@@ -33,15 +28,22 @@ body.parallax-body {
         perspective: parallax.$perspective;
         -webkit-perspective-origin: right;
         perspective-origin: right;
+
+        > * { // originally outside parallax.support, test if needed
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
     }
 }
 
 .parallax-group {
-    @extend .relative, .click-through;
+    position: relative;
+    pointer-events: none;
     background-color: transparent !important;
 
     & > * {
-        @extend .relative;
+        position: relative; // fixes a stacking issue in IE. must be overridden by mixin.
+        pointer-events: auto;
     }
 
     @include parallax.support {
@@ -54,12 +56,4 @@ body.parallax-body {
         padding-left: calc(#{$offset}vw - #{$offset}%);
         padding-right: calc(#{$offset}vw - #{$offset}%);
     }
-}
-
-.parallax-bg-deep {
-    @include parallax.bg(-1000px);
-}
-
-.parallax-bg-shallow {
-    @include parallax.bg(-500px);
 }
