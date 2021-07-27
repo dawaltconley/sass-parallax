@@ -1,5 +1,11 @@
 // styling for container elements of parallax pages
-@use "mixins/parallax";
+@use "sass:math";
+@use "mixins" as parallax;
+
+$p: parallax.$perspective;
+@if math.is-unitless($p) {
+    $p: $p * 1px;
+}
 
 body.parallax-body {
     @include parallax.support {
@@ -24,8 +30,8 @@ body.parallax-body {
 
     @include parallax.support {
         height: 100vh;
-        -webkit-perspective: parallax.$perspective;
-        perspective: parallax.$perspective;
+        -webkit-perspective: $p;
+        perspective: $p;
         -webkit-perspective-origin: right;
         perspective-origin: right;
 

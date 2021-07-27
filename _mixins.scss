@@ -1,6 +1,9 @@
 @use "sass:math";
 
 $perspective: 2000px !default;
+@if math.is-unitless($perspective) {
+    $perspective: $perspective * 1px;
+}
 
 // checks to rule out browsers that won't support css parallax effect
 
@@ -17,8 +20,19 @@ $perspective: 2000px !default;
 // for the layer to always fill the width of its parent parallax-group
 
 @mixin bg($depth: 0px, $perspective: $perspective) {
-    @if $depth >= $perspective {
+    @if not math.compatible($depth, $perspective) {
+        @error "$depth must use same units as $perspective";
+    } @else if $depth >= $perspective {
         @error "$depth of parallax element must be less than $perspective";
+    }
+
+    @if math.is-unitless($depth) and math.is-unitless($perspective) {
+        $depth: $depth * 1px;
+        $perspective: $perspective * 1px;
+    } @else if math.is-unitless($depth) {
+        $depth: $depth + $perspective - $perspective;
+    } @else if math.is-unitless($perspective) {
+        $perspective: $perspective + $depth - $depth; // but other sheet always uses pixels as fallback...
     }
 
     position: absolute !important;
