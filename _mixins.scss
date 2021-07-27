@@ -36,7 +36,7 @@ $perspective: 2000px !default;
 // can be document body, but putting the two together
 // caused issues in some browsers
 
-@mixin page {
+@mixin page($perspective: $perspective) {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
@@ -58,13 +58,13 @@ $perspective: 2000px !default;
 // settings for a group of parallax elements positione in 3d space
 // within the scrollable page.
 
-@mixin group {
+@mixin group($IE: null, $offset: 100) {
     position: relative;
     pointer-events: none;
     background-color: transparent !important;
 
     & > * {
-        position: relative; // fixes a stacking issue in IE. must be overridden by mixin.
+        position: if($IE, relative, null); // fixes a stacking issue in IE. must be overridden by mixin.
         pointer-events: auto;
     }
 
@@ -72,7 +72,7 @@ $perspective: 2000px !default;
         -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
 
-        $offset: 100; // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
+        // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
         margin-left: calc(#{$offset}% - #{$offset}vw);
         margin-right: calc(#{$offset}% - #{$offset}vw);
         padding-left: calc(#{$offset}vw - #{$offset}%);
