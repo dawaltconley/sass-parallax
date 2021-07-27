@@ -1,5 +1,7 @@
 @use "sass:math";
 
+$IE: false !default;
+$offset: 100 !default;
 $perspective: 2000px !default;
 @if math.is-unitless($perspective) {
     $perspective: $perspective * 1px;
@@ -58,7 +60,7 @@ $perspective: 2000px !default;
 // settings for a group of parallax elements positione in 3d space
 // within the scrollable page.
 
-@mixin group($IE: null, $offset: 100) {
+@mixin group($IE: $IE, $offset: $offset) {
     position: relative;
     pointer-events: none;
     background-color: transparent !important;
