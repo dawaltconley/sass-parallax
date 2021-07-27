@@ -1,0 +1,65 @@
+// styling for container elements of parallax pages
+@use "mixins/parallax";
+
+body.parallax-body {
+    @include parallax.support {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    &::before { // fixes rendering issues on Edge
+        content: "";
+        position: fixed;
+        top: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 1;
+    }
+}
+
+.parallax-page {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    @if $native-scroll { scroll-behavior: smooth; }
+
+    > * {
+        @extend .hw-accel;
+    }
+
+    @include parallax.support {
+        height: 100vh;
+        -webkit-perspective: parallax.$perspective;
+        perspective: parallax.$perspective;
+        -webkit-perspective-origin: right;
+        perspective-origin: right;
+    }
+}
+
+.parallax-group {
+    @extend .relative, .click-through;
+    background-color: transparent !important;
+
+    & > * {
+        @extend .relative;
+    }
+
+    @include parallax.support {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        $offset: 100; // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
+        margin-left: calc(#{$offset}% - #{$offset}vw);
+        margin-right: calc(#{$offset}% - #{$offset}vw);
+        padding-left: calc(#{$offset}vw - #{$offset}%);
+        padding-right: calc(#{$offset}vw - #{$offset}%);
+    }
+}
+
+.parallax-bg-deep {
+    @include parallax.bg(-1000px);
+}
+
+.parallax-bg-shallow {
+    @include parallax.bg(-500px);
+}
