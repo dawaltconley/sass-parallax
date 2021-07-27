@@ -1,6 +1,6 @@
 @use 'mixins' as parallax with ($perspective: 100px);
 
-.parallax-body {
+body {
     @include parallax.body();
 }
 
