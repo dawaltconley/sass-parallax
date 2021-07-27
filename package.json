@@ -1,0 +1,34 @@
+{
+  "name": "sass-parallax",
+  "version": "0.1.0",
+  "description": "Mixin and styles for pure CSS parallax.",
+  "main": "_index.scss",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dawaltconley/sass-parallax.git"
+  },
+  "keywords": [
+    "sass",
+    "parallax",
+    "pure",
+    "css",
+    "keith",
+    "clark"
+  ],
+  "author": "Dylan Awalt-Conley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dawaltconley/sass-parallax/issues"
+  },
+  "homepage": "https://github.com/dawaltconley/sass-parallax#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1",
+    "eslint": "^7.31.0",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.0.0",
+    "sass": "^1.36.0"
+  }
+}
