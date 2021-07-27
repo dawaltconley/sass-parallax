@@ -7,7 +7,7 @@ $p: parallax.$perspective;
     $p: $p * 1px;
 }
 
-body.parallax-body {
+.parallax-body {
     @include parallax.support {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
