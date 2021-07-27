@@ -2,7 +2,8 @@
   "name": "sass-parallax",
   "version": "0.1.0",
   "description": "Mixin and styles for pure CSS parallax.",
-  "main": "_index.scss",
+  "main": "_mixins.scss",
+  "files": [],
   "scripts": {
     "build": "npx gulp build ; npx @11ty/eleventy",
     "serve": "npx gulp serve & npx @11ty/eleventy --serve",
