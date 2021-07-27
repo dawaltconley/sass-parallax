@@ -1,4 +1,0 @@
-$perspective: 2000px !default;
-
-@forward 'mixins' with($perspective: $perspective);
-@forward 'styles';

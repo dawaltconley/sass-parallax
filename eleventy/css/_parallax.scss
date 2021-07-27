@@ -1,4 +1,16 @@
-@use 'index' as parallax with ($perspective: 100px);
+@use 'mixins' as parallax with ($perspective: 100px);
+
+.parallax-body {
+    @include parallax.body();
+}
+
+.parallax-page {
+    @include parallax.page();
+}
+
+.parallax-group {
+    @include parallax.group();
+}
 
 .parallax-bg-deep {
     @include parallax.bg(-200);
