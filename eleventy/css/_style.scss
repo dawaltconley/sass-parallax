@@ -48,6 +48,17 @@ a {
     }
 }
 
+footer {
+    color: $bg-color;
+    background-color: $text-color;
+    padding: 15px;
+    line-height: 1.4;
+    font-size: 16px;
+    p {
+        margin: 0;
+    }
+}
+
 %flex-center {
     display: flex;
     flex-direction: column;
@@ -74,17 +85,6 @@ a {
 .parallax-group {
     color: $bg-color;
     text-shadow: 1px 1px 4px $text-color;
-}
-
-footer {
-    color: $bg-color;
-    background-color: $text-color;
-    padding: 15px;
-    line-height: 1.4;
-    font-size: 16px;
-    p {
-        margin: 0;
-    }
 }
 
 .footer-table {
