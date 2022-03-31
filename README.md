@@ -6,30 +6,30 @@ Clark's layout](https://keithclark.co.uk/articles/pure-css-parallax-websites/).
 ## Basic Use
 
 ```scss
-@use 'node_modules/sass-parallax/parallax' with ($perspective: 100px);
+@use 'node_modules/sass-parallax' with ($perspective: 100px);
 
 body {
-    @include parallax.body();
+    @include sass-parallax.body();
 }
 
 .parallax-page {
-    @include parallax.page();
+    @include sass-parallax.page();
 }
 
 .parallax-group {
-    @include parallax.group();
+    @include sass-parallax.group();
 }
 
 .parallax-bg-deep {
-    @include parallax.bg(-200px);
+    @include sass-parallax.bg(-200px);
 }
 
 .parallax-bg-middle {
-    @include parallax.bg(-100px);
+    @include sass-parallax.bg(-100px);
 }
 
 .parallax-bg-shallow {
-    @include parallax.bg(-50px);
+    @include sass-parallax.bg(-50px);
 }
 ```
 
@@ -86,10 +86,10 @@ potential cascade issues, but can be applied by setting `$IE` to `true` when
 importing the mixins, or when the `group` mixin.
 
 ```scss
-@use 'node_modules/sass-parallax/parallax' with ($IE: true);
+@use 'node_modules/sass-parallax' with ($IE: true);
 
 .parallax-group {
-    @include parallax.group($IE: true);
+    @include sass-parallax.group($IE: true);
 }
 ```
 

@@ -1,4 +1,4 @@
-@use '../../parallax' with ($perspective: 100px);
+@use '../../index' as parallax with ($perspective: 100px);
 
 body {
     @include parallax.body();
