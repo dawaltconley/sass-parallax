@@ -82,7 +82,7 @@ footer {
     z-index: 1;
 }
 
-.parallax-group {
+.parallax__group {
     color: $bg-color;
     text-shadow: 1px 1px 4px $text-color;
 }
@@ -160,7 +160,7 @@ footer {
 
     @for $i from 1 through 3 {
         $depth: nth(("shallow", "middle", "deep"), $i);
-        &.parallax-bg-#{$depth} {
+        &.parallax__bg--#{$depth} {
             $color: rgba(darken($arrow-color, $i * 14%), 1);
             $size: $arrow-size - ($i * 4px);
             &:before, &:after {

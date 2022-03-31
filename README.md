@@ -12,23 +12,23 @@ body {
     @include sass-parallax.body();
 }
 
-.parallax-page {
+.parallax {
     @include sass-parallax.page();
 }
 
-.parallax-group {
+.parallax__group {
     @include sass-parallax.group();
 }
 
-.parallax-bg-deep {
+.parallax__bg--deep {
     @include sass-parallax.bg(-200px);
 }
 
-.parallax-bg-middle {
+.parallax__bg--middle {
     @include sass-parallax.bg(-100px);
 }
 
-.parallax-bg-shallow {
+.parallax__bg--shallow {
     @include sass-parallax.bg(-50px);
 }
 ```
@@ -37,16 +37,16 @@ Document should look something like this:
 
 ```html
 <body>
-    <div class="parallax-page">
-        <div class="parallax-group">
-            <div class="parallax-bg-deep"></div>
-            <div class="parallax-bg-middle"></div>
+    <div class="parallax">
+        <div class="parallax__group">
+            <div class="parallax__bg--deep"></div>
+            <div class="parallax__bg--middle"></div>
         </div>
         <div>
             Non-parallax content
         </div>
-        <div class="parallax-group">
-            <div class="parallax-bg-shallow"></div>
+        <div class="parallax__group">
+            <div class="parallax__bg--shallow"></div>
         </div>
     </div>
 </body>
@@ -88,7 +88,7 @@ importing the mixins, or when the `group` mixin.
 ```scss
 @use 'node_modules/sass-parallax' with ($IE: true);
 
-.parallax-group {
+.parallax__group {
     @include sass-parallax.group($IE: true);
 }
 ```

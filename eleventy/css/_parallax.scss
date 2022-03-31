@@ -4,22 +4,22 @@ body {
     @include parallax.body();
 }
 
-.parallax-page {
+.parallax {
     @include parallax.page();
 }
 
-.parallax-group {
+.parallax__group {
     @include parallax.group();
 }
 
-.parallax-bg-deep {
+.parallax__bg--deep {
     @include parallax.bg(-200);
 }
 
-.parallax-bg-middle {
+.parallax__bg--middle {
     @include parallax.bg(-100);
 }
 
-.parallax-bg-shallow {
+.parallax__bg--shallow {
     @include parallax.bg(-50);
 }
