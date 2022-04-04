@@ -1,0 +1,118 @@
+@use "sass:math";
+
+$IE: false !default;
+$offset: 100 !default;
+$perspective: 2000px !default;
+@if math.is-unitless($perspective) {
+    $perspective: $perspective * 1px;
+}
+
+// checks to rule out browsers that won't support css parallax effect
+
+@mixin support {
+    @supports (((-webkit-perspective: 1px) or (perspective: 1px)) and (not (-webkit-overflow-scrolling: touch))) {
+        @content;
+    }
+}
+
+// settings for the document body of a parallax page
+// applies hw acceleration
+
+@mixin body {
+    @include support {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    &::before { // fixes rendering issues on Edge
+        content: "";
+        position: fixed;
+        top: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 1;
+    }
+}
+
+// settings for the scrollable element of the parallax page
+// can be document body, but putting the two together
+// caused issues in some browsers
+
+@mixin page($perspective: $perspective) {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @include support {
+        height: 100vh;
+        -webkit-perspective: $perspective;
+        perspective: $perspective;
+        -webkit-perspective-origin: right;
+        perspective-origin: right;
+
+        > * { // originally outside parallax.support, test if needed
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+    }
+}
+
+// settings for a group of parallax elements positione in 3d space
+// within the scrollable page.
+
+@mixin group($IE: $IE, $offset: $offset) {
+    position: relative;
+    pointer-events: none;
+    background-color: transparent !important;
+
+    & > * {
+        position: if($IE, relative, null); // fixes a stacking issue in IE. must be overridden by mixin.
+        pointer-events: auto;
+    }
+
+    @include support {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
+        margin-left: calc(#{$offset}% - #{$offset}vw);
+        margin-right: calc(#{$offset}% - #{$offset}vw);
+        padding-left: calc(#{$offset}vw - #{$offset}%);
+        padding-right: calc(#{$offset}vw - #{$offset}%);
+    }
+}
+
+// settings for a layer of a parallax-group div
+// $scale calculates scale to preserve original size when translated backwards
+// $height-adjust calculates minimum height adjusment necessary
+// for the layer to always fill the width of its parent parallax-group
+
+@mixin bg($depth: 0px, $perspective: $perspective) {
+    @if not math.compatible($depth, $perspective) {
+        @error "$depth must use same units as $perspective";
+    } @else if $depth >= $perspective {
+        @error "$depth of parallax element must be less than $perspective";
+    }
+
+    @if math.is-unitless($depth) and math.is-unitless($perspective) {
+        $depth: $depth * 1px;
+        $perspective: $perspective * 1px;
+    } @else if math.is-unitless($depth) {
+        $depth: $depth + $perspective - $perspective;
+    } @else if math.is-unitless($perspective) {
+        $perspective: $perspective + $depth - $depth; // but other sheet always uses pixels as fallback...
+    }
+
+    position: absolute !important;
+    top: 0; bottom: 0; left: 0; right: 0;
+
+    @include support {
+        $scale: 1 + math.abs(math.div($depth, $perspective));
+        $height-adjust: calc(#{ 1 - math.div(1, $scale) } * (50% - 50vh));
+        top: $height-adjust; bottom: $height-adjust;
+        -webkit-transform-origin: right;
+        transform-origin: right;
+        -webkit-transform: translateZ($depth) scale($scale);
+        transform: translateZ($depth) scale($scale);
+    }
+}
