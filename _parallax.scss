@@ -20,7 +20,6 @@ $perspective: 2000px !default;
 
 @mixin body {
     @include support {
-        -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
 
@@ -45,13 +44,10 @@ $perspective: 2000px !default;
 
     @include support {
         height: 100vh;
-        -webkit-perspective: $perspective;
         perspective: $perspective;
-        -webkit-perspective-origin: right;
         perspective-origin: right;
 
         > * { // originally outside parallax.support, test if needed
-            -webkit-transform: translateZ(0);
             transform: translateZ(0);
         }
     }
@@ -71,7 +67,6 @@ $perspective: 2000px !default;
     }
 
     @include support {
-        -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
 
         // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
@@ -110,9 +105,7 @@ $perspective: 2000px !default;
         $scale: 1 + math.abs(math.div($depth, $perspective));
         $height-adjust: calc(#{ 1 - math.div(1, $scale) } * (50% - 50vh));
         top: $height-adjust; bottom: $height-adjust;
-        -webkit-transform-origin: right;
         transform-origin: right;
-        -webkit-transform: translateZ($depth) scale($scale);
         transform: translateZ($depth) scale($scale);
     }
 }
