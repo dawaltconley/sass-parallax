@@ -1,6 +1,6 @@
 {
   "name": "sass-parallax",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Mixins for pure CSS parallax.",
   "files": [
     "_index.scss",
