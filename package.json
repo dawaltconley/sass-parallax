@@ -7,8 +7,8 @@
     "_parallax.scss"
   ],
   "scripts": {
-    "build": "npx gulp build ; npx @11ty/eleventy",
-    "serve": "npx gulp serve & npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve --incremental",
     "test": "npm run build",
     "prepublishOnly": "npm test"
   },
@@ -31,12 +31,12 @@
   },
   "homepage": "https://github.com/dawaltconley/sass-parallax#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy": "^1.0.0",
     "eslint": "^7.31.0",
     "gulp": "^4.0.2",
     "gulp-sass": "^5.0.0",
     "normalize.css": "^8.0.1",
-    "sass": "^1.36.0",
+    "sass": "^1.50.0",
     "stylelint": "^13.13.1",
     "stylelint-config-recommended": "^5.0.0",
     "stylelint-config-recommended-scss": "^4.3.0",
