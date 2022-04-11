@@ -96,3 +96,29 @@ importing the mixins, or when the `group` mixin.
 ### `$offset`
 
 By default, an offset is applied to parallax groups, in order to avoid [issues caused by certain system scrollbars](https://dawaltconley.github.io/parallax-gap-fix/). This can be tweaked on import or include as well, but an offset of `100` is recommended for best performance on most browsers.
+
+### `$css-properites`
+
+Setting this to `true` will use CSS properties where possible. Rather than letting Sass handle most of the math during build, the `bg` function will output `calc` statements for the browser to render. This allows live editing of an element's parallax depth using the `--parallax-depth` property. This property is a unitless number, and calculates depth relative to the `--parallax-perspective` property.
+
+```scss
+@use 'node_modules/sass-parallax' with ($css-properties: true);
+
+.parallax {
+    @include sass-parallax.page(100px, $css-properties: true);
+    // --parallax-perspective: 100px;
+    // sets the perspective on this element
+    // and is inherited by its children
+}
+
+.parallax__bg--deep {
+    @include sass-parallax.bg(-2, $css-properties: true);
+    // --parallax-depth: -2;
+    // controls depth of this background element
+    // relative to --parallax-perspective
+}
+```
+
+## Pure CSS
+
+This package outputs a pure CSS file, `dist/parallax.css`, with `.parallax`, `.parallax__group`, and `.parallax__bg` class that style parallax elements using the above CSS properties.
