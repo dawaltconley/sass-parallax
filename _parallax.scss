@@ -1,6 +1,7 @@
 @use "sass:math";
 
 $IE: false !default;
+$css-properties: false !default;
 $offset: 100 !default;
 $perspective: 2000px !default;
 @if math.is-unitless($perspective) {
@@ -37,15 +38,20 @@ $perspective: 2000px !default;
 // can be document body, but putting the two together
 // caused issues in some browsers
 
-@mixin page($perspective: $perspective) {
+@mixin page($perspective: $perspective, $css-properties: $css-properties) {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
 
     @include support {
         height: 100vh;
-        perspective: $perspective;
         perspective-origin: right;
+        @if $css-properties {
+            --parallax-perspective: #{$perspective};
+            perspective: var(--parallax-perspective);
+        } @else {
+            perspective: $perspective;
+        }
 
         > * { // originally outside parallax.support, test if needed
             transform: translateZ(0);
@@ -82,30 +88,53 @@ $perspective: 2000px !default;
 // $height-adjust calculates minimum height adjusment necessary
 // for the layer to always fill the width of its parent parallax-group
 
-@mixin bg($depth: 0px, $perspective: $perspective) {
-    @if not math.compatible($depth, $perspective) {
-        @error "$depth must use same units as $perspective";
-    } @else if $depth >= $perspective {
-        @error "$depth of parallax element must be less than $perspective";
-    }
+$_parent-perspective: $perspective;
 
-    @if math.is-unitless($depth) and math.is-unitless($perspective) {
-        $depth: $depth * 1px;
-        $perspective: $perspective * 1px;
-    } @else if math.is-unitless($depth) {
-        $depth: $depth + $perspective - $perspective;
-    } @else if math.is-unitless($perspective) {
-        $perspective: $perspective + $depth - $depth; // but other sheet always uses pixels as fallback...
+@mixin bg($depth: 0, $perspective: $perspective, $css-properties: $css-properties) {
+    @if $css-properties {
+        @if math.is-unitless($perspective) {
+            $perspective: $perspective * 1px;
+        }
+        @if not math.is-unitless($depth) and math.compatible($depth, $perspective) {
+            $depth: math.div($depth, $perspective);
+        }
+    } @else {
+        @if not math.compatible($depth, $perspective) {
+            @error "$depth must use same units as $perspective";
+        } @else if $depth >= $perspective {
+            @error "$depth of parallax element must be less than $perspective";
+        }
+
+        @if math.is-unitless($depth) and math.is-unitless($perspective) {
+            $depth: $depth * 1px;
+            $perspective: $perspective * 1px;
+        } @else if math.is-unitless($depth) {
+            $depth: $depth + $perspective - $perspective;
+        } @else if math.is-unitless($perspective) {
+            $perspective: $perspective + $depth - $depth; // but other sheet always uses pixels as fallback...
+        }
     }
 
     position: absolute !important;
     top: 0; bottom: 0; left: 0; right: 0;
 
     @include support {
-        $scale: 1 + math.abs(math.div($depth, $perspective));
-        $height-adjust: calc(#{ 1 - math.div(1, $scale) } * (50% - 50vh));
-        top: $height-adjust; bottom: $height-adjust;
-        transform-origin: right;
-        transform: translateZ($depth) scale($scale);
+        @if $css-properties {
+            @if $perspective != $_parent-perspective {
+                --parallax-perspective: #{$perspective};
+            }
+            --parallax-depth: #{$depth}; // must be unitless, relative to --parallax-perspective
+            --parallax-scale: #{calc(1 + max(var(--parallax-depth), calc(var(--parallax-depth) * -1)))};
+            --parallax-height-adjust: #{calc((1 - (1 / var(--parallax-scale))) * (50% - 50vh))};
+            top: var(--parallax-height-adjust); bottom: var(--parallax-height-adjust);
+            transform-origin: right;
+            transform: translateZ(calc(var(--parallax-depth) * var(--parallax-perspective))) scale(var(--parallax-scale));
+        } @else {
+            $scale: 1 + math.abs(math.div($depth, $perspective));
+            $height-adjust: calc(#{ 1 - math.div(1, $scale) } * (50% - 50vh));
+            top: $height-adjust; bottom: $height-adjust;
+            transform-origin: right;
+            transform: translateZ($depth) scale($scale);
+        }
     }
 }
