@@ -7,6 +7,7 @@ const sassOpts = {
 module.exports = eleventyConfig => {
     eleventyConfig.addPassthroughCopy('eleventy/images');
     eleventyConfig.addWatchTarget('eleventy/css');
+    eleventyConfig.addWatchTarget('*.scss');
     eleventyConfig.on('eleventy.after', () => {
         const { css:main } = sass.compile('eleventy/css/main.scss', sassOpts);
         const { css:cssProps } = sass.compile('eleventy/css/css-properties.scss', sassOpts);
