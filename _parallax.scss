@@ -5,7 +5,7 @@ $css-properties: false !default;
 $offset: 100 !default;
 $perspective: 2000px !default;
 @if math.is-unitless($perspective) {
-    $perspective: $perspective * 1px;
+    @error '$perspective cannot be unitless: #{$perspective}';
 }
 
 // checks to rule out browsers that won't support css parallax effect
@@ -40,6 +40,10 @@ $perspective: 2000px !default;
 // caused issues in some browsers
 
 @mixin page($perspective: $perspective, $css-properties: $css-properties) {
+    @if math.is-unitless($perspective) {
+        @error '$perspective cannot be unitless: #{$perspective}';
+    }
+
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
@@ -92,28 +96,17 @@ $perspective: 2000px !default;
 $_parent-perspective: $perspective;
 
 @mixin bg($depth: 0, $perspective: $perspective, $css-properties: $css-properties) {
-    @if $css-properties {
-        @if math.is-unitless($perspective) {
-            $perspective: $perspective * 1px;
+    @if math.is-unitless($perspective) {
+        @error '$perspective cannot be unitless: #{$perspective}';
+    } @else if not math.compatible($depth, $perspective) {
+        @error '$depth must use the same units as $perspective';
+    } @else if math.is-unitless($depth) and $depth >= 1 {
+        @error 'relative $depth must be less than 1';
+    } @else if not math.is-unitless($depth) {
+        @if $depth >= $perspective {
+            @error 'absolute $depth must be less than $perspective';
         }
-        @if not math.is-unitless($depth) and math.compatible($depth, $perspective) {
-            $depth: math.div($depth, $perspective);
-        }
-    } @else {
-        @if not math.compatible($depth, $perspective) {
-            @error "$depth must use same units as $perspective";
-        } @else if $depth >= $perspective {
-            @error "$depth of parallax element must be less than $perspective";
-        }
-
-        @if math.is-unitless($depth) and math.is-unitless($perspective) {
-            $depth: $depth * 1px;
-            $perspective: $perspective * 1px;
-        } @else if math.is-unitless($depth) {
-            $depth: $depth + $perspective - $perspective;
-        } @else if math.is-unitless($perspective) {
-            $perspective: $perspective + $depth - $depth; // but other sheet always uses pixels as fallback...
-        }
+        $depth: math.div($depth, $perspective);
     }
 
     position: absolute !important;
@@ -131,11 +124,11 @@ $_parent-perspective: $perspective;
             transform-origin: right;
             transform: translateZ(calc(var(--parallax-depth) * var(--parallax-perspective))) scale(var(--parallax-scale));
         } @else {
-            $scale: 1 + math.abs(math.div($depth, $perspective));
+            $scale: 1 + math.abs($depth);
             $height-adjust: calc(#{ 1 - math.div(1, $scale) } * (50% - 50vh));
             top: $height-adjust; bottom: $height-adjust;
             transform-origin: right;
-            transform: translateZ($depth) scale($scale);
+            transform: translateZ(#{ $depth * $perspective }) scale($scale);
         }
     }
 }

@@ -13,13 +13,13 @@ body {
 }
 
 .parallax__bg--deep {
-    @include parallax.bg(-200);
+    @include parallax.bg(-200px);
 }
 
 .parallax__bg--middle {
-    @include parallax.bg(-100);
+    @include parallax.bg(-100px);
 }
 
 .parallax__bg--shallow {
-    @include parallax.bg(-50);
+    @include parallax.bg(-50px);
 }
