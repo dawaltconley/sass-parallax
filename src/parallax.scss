@@ -1,0 +1,17 @@
+@use '../index' as parallax with ($perspective: 100px, $css-properties: true);
+
+body {
+    @include parallax.body();
+}
+
+.parallax {
+    @include parallax.page();
+}
+
+.parallax__group {
+    @include parallax.group();
+}
+
+.parallax__bg {
+    @include parallax.bg(0);
+}
