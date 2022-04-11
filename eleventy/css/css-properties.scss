@@ -1,0 +1,17 @@
+@use 'normalize.css/normalize';
+
+@use 'style';
+@use 'dist/parallax';
+
+.parallax__bg {
+    &--deep {
+        --parallax-depth: -2;
+    }
+    &--middle {
+        --parallax-depth: -1;
+    }
+    &--shallow {
+        --parallax-depth: -0.5;
+    }
+}
+
