@@ -9,6 +9,7 @@ $perspective: 2000px !default;
 }
 
 // checks to rule out browsers that won't support css parallax effect
+// TODO: -webkit-overflow-scrolling was a hack to target iOS Safari, but dropped after v13
 
 @mixin support {
     @supports (((-webkit-perspective: 1px) or (perspective: 1px)) and (not (-webkit-overflow-scrolling: touch))) {
