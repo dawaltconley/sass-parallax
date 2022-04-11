@@ -121,4 +121,4 @@ Setting this to `true` will use CSS properties where possible. Rather than letti
 
 ## Pure CSS
 
-This package outputs a pure CSS file, `dist/parallax.css`, with `.parallax`, `.parallax__group`, and `.parallax__bg` class that style parallax elements using the above CSS properties.
+This package outputs a pure CSS file, `dist/parallax.css`, with `.parallax`, `.parallax__group`, and `.parallax__bg` classes that style parallax elements using the above CSS properties.
