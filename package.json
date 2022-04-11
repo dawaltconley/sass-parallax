@@ -4,13 +4,15 @@
   "description": "Mixins for pure CSS parallax.",
   "files": [
     "_index.scss",
-    "_parallax.scss"
+    "_parallax.scss",
+    "dist/**/*"
   ],
   "scripts": {
     "build": "npx @11ty/eleventy",
     "serve": "npx @11ty/eleventy --serve --incremental",
+    "compile": "npx sass --no-source-map src/parallax.scss dist/parallax.css",
     "test": "npm run build",
-    "prepublishOnly": "npm test"
+    "prepublishOnly": "npm test && npm run compile"
   },
   "repository": {
     "type": "git",
