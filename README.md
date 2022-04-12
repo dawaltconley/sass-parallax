@@ -80,7 +80,7 @@ will throw off the parallax alignment.
 ### `$IE`
 
 In order for parallax layouts to display properly in Internet Explorer (as flat,
-non-parallax pages) every immediate childe of a `group` element must have their
+non-parallax pages) every immediate child of a `group` element must have their
 position set to either relative or absolute. This is off by default, to avoid
 potential cascade issues, but can be applied by setting `$IE` to `true` when
 importing the mixins, or when the `group` mixin.
@@ -92,10 +92,6 @@ importing the mixins, or when the `group` mixin.
     @include sass-parallax.group($IE: true);
 }
 ```
-
-### `$offset`
-
-By default, an offset is applied to parallax groups, in order to avoid [issues caused by certain system scrollbars](https://dawaltconley.github.io/parallax-gap-fix/). This can be tweaked on import or include as well, but an offset of `100` is recommended for best performance on most browsers.
 
 ### `$css-properites`
 

@@ -2,7 +2,6 @@
 
 $IE: false !default;
 $css-properties: false !default;
-$offset: 100 !default;
 $perspective: 2000px !default;
 @if math.is-unitless($perspective) {
     @error '$perspective cannot be unitless: #{$perspective}';
@@ -50,7 +49,7 @@ $perspective: 2000px !default;
 
     @include support {
         height: 100vh;
-        perspective-origin: right;
+        perspective-origin: left;
         @if $css-properties {
             --parallax-perspective: #{$perspective};
             perspective: var(--parallax-perspective);
@@ -67,7 +66,7 @@ $perspective: 2000px !default;
 // settings for a group of parallax elements positione in 3d space
 // within the scrollable page.
 
-@mixin group($IE: $IE, $offset: $offset) {
+@mixin group($IE: $IE) {
     position: relative;
     pointer-events: none;
     background-color: transparent !important;
@@ -79,12 +78,6 @@ $perspective: 2000px !default;
 
     @include support {
         transform-style: preserve-3d;
-
-        // fix for scrollbar bug; works on all modern browsers except Safari, which wants an offset of 50 instead
-        margin-left: calc(#{$offset}% - #{$offset}vw);
-        margin-right: calc(#{$offset}% - #{$offset}vw);
-        padding-left: calc(#{$offset}vw - #{$offset}%);
-        padding-right: calc(#{$offset}vw - #{$offset}%);
     }
 }
 
@@ -113,6 +106,8 @@ $_parent-perspective: $perspective;
     top: 0; bottom: 0; left: 0; right: 0;
 
     @include support {
+        transform-origin: left;
+
         @if $css-properties {
             @if $perspective != $_parent-perspective {
                 --parallax-perspective: #{$perspective};
@@ -121,13 +116,11 @@ $_parent-perspective: $perspective;
             --parallax-scale: #{calc(1 + max(var(--parallax-depth), calc(var(--parallax-depth) * -1)))};
             --parallax-height-adjust: #{calc((1 - (1 / var(--parallax-scale))) * (50% - 50vh))};
             top: var(--parallax-height-adjust); bottom: var(--parallax-height-adjust);
-            transform-origin: right;
             transform: translateZ(calc(var(--parallax-depth) * var(--parallax-perspective))) scale(var(--parallax-scale));
         } @else {
             $scale: 1 + math.abs($depth);
             $height-adjust: calc(#{ 1 - math.div(1, $scale) } * (50% - 50vh));
             top: $height-adjust; bottom: $height-adjust;
-            transform-origin: right;
             transform: translateZ(#{ $depth * $perspective }) scale($scale);
         }
     }
