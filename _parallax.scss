@@ -57,8 +57,10 @@ $perspective: 2000px !default;
             perspective: $perspective;
         }
 
-        > * { // originally outside parallax.support, test if needed
+        > * {
+            // this is fixes a chromium rendering bug: https://bugs.chromium.org/p/chromium/issues/detail?id=754285
             transform: translateZ(0);
+            transform-style: preserve-3d;
         }
     }
 }
