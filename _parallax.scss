@@ -71,7 +71,7 @@ $perspective: 2000px !default;
 @mixin group($IE: $IE) {
     position: relative;
     pointer-events: none;
-    background-color: transparent !important;
+    background-color: transparent;
     z-index: -1; // positions children behind other
 
     & > * {
@@ -105,7 +105,7 @@ $_parent-perspective: $perspective;
         $depth: math.div($depth, $perspective);
     }
 
-    position: absolute !important;
+    position: absolute;
     top: 0; bottom: 0; left: 0; right: 0;
 
     @include support {
