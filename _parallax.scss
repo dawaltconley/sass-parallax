@@ -72,6 +72,7 @@ $perspective: 2000px !default;
     position: relative;
     pointer-events: none;
     background-color: transparent !important;
+    z-index: -1; // positions children behind other
 
     & > * {
         position: if($IE, relative, null); // fixes a stacking issue in IE. must be overridden by mixin.
