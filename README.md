@@ -115,6 +115,10 @@ Setting this to `true` will use CSS properties where possible. Rather than letti
 }
 ```
 
+### `$disable`
+
+A boolean option, defaults to `false`. Setting this to `true` will omit any styles within the `support` mixin, mimicking the styles of an unsupported browser. Useful for testing.
+
 ## Pure CSS
 
 This package outputs a pure CSS file, `dist/parallax.css`, with `.parallax`, `.parallax__group`, and `.parallax__bg` classes that style parallax elements using the above CSS properties.

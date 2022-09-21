@@ -1,5 +1,6 @@
 @use "sass:math";
 
+$disable: false !default;
 $IE: false !default;
 $css-properties: false !default;
 $perspective: 2000px !default;
@@ -11,8 +12,10 @@ $perspective: 2000px !default;
 // TODO: -webkit-overflow-scrolling was a hack to target iOS Safari, but dropped after v13
 
 @mixin support {
-    @supports (((-webkit-perspective: 1px) or (perspective: 1px)) and (not (-webkit-overflow-scrolling: touch))) {
-        @content;
+    @if not $disable {
+        @supports (((-webkit-perspective: 1px) or (perspective: 1px)) and (not (-webkit-overflow-scrolling: touch))) {
+            @content;
+        }
     }
 }
 
