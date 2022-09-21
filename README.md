@@ -83,7 +83,7 @@ In order for parallax layouts to display properly in Internet Explorer (as flat,
 non-parallax pages) every immediate child of a `group` element must have their
 position set to either relative or absolute. This is off by default, to avoid
 potential cascade issues, but can be applied by setting `$IE` to `true` when
-importing the mixins, or when the `group` mixin.
+importing the mixins, or when using the `group` mixin.
 
 ```scss
 @use 'node_modules/sass-parallax' with ($IE: true);
